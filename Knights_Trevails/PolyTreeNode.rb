@@ -1,9 +1,9 @@
 class PolyTreeNode
 
-    attr_reader :value, :parent, :children
+    attr_reader :root_node, :parent, :children
 
-    def initialize(value)
-        @value = value
+    def initialize(start_position)
+        @root_node = start_position
         @parent = nil
         @children = []
     end
@@ -20,5 +20,14 @@ class PolyTreeNode
             @parent = new_parent
         end
     end
+    def add_child(new_child)
+        self.children << new_child if !self.children.include?(new_child)
+        new_child.parent = self 
+    end
+    def remove_child(child)
+        self.children.delete(child) 
+        child.parent = nil 
+    end
+        
 
 end
