@@ -1,10 +1,10 @@
 require_relative "KnightPathFinder.rb"
 class PolyTreeNode
 
-    attr_reader :root_node, :parent, :children
+    attr_reader :value, :parent, :children
 
-    def initialize(start_position)
-        @root_node = start_position
+    def initialize(value)
+        @value = value
         @parent = nil
         @children = []
     end
@@ -22,13 +22,34 @@ class PolyTreeNode
         end
     end
     def add_child(new_child)
-        self.children << new_child if !self.children.include?(new_child)
+        # self.children << new_child if !self.children.include?(new_child)
         new_child.parent = self 
     end
     def remove_child(child)
         self.children.delete(child) 
         child.parent = nil 
     end
-        
+
+    def bfs(target)
+        nodes = [self]
+        until nodes.empty?
+            node = nodes.shift
+
+            return node if node.value == target
+            node.children.each do |child|
+                nodes << child
+            end
+        end
+        nil
+    end
+
+    def dfs(target)
+        return self if self.value == target
+        self.children.each do |child|
+            found = child.dfs(target)
+            return found if found != nil
+        end
+        nil
+    end
 
 end

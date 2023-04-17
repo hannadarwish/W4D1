@@ -4,27 +4,40 @@ class KnightPathFinder
     attr_reader :start_position, :considered_positions
 
     def initialize(start_position) # [0, 0]
-        @start_position = start_position
+        @root_node = PolyTreeNode.new(start_position)
         @move_tree = self.build_move_tree(start_position)
         @considered_positions = [] 
     end
-    def build_move_tree(start_position)
-        PolyTreeNode.new(start_position)
-    end
-    def self.valid_moves(pos)
-        valid_moves = [] 
-        x, y = pos 
-        valid_moves << [x+2, y-1]
-        valid_moves << [x+1, y-2]
-        valid_moves << [x-1, y+2]
-        valid_moves << [x-2, y+1]
-        valid_moves << [x+1, y+2]
-        valid_moves << [x+2, y+1]
-        valid_moves << [x-1, y-2]
-        valid_moves << [x-2, y-1]
 
+    def build_move_tree(start_position)
+        # PolyTreeNode.new(start_position)
+        # add new nodes to the queue.
+        # until queue is empty, keep creating new nodes (until 64)
+        # bfs
+    end
+
+    def self.valid_moves(pos)
+        possible_moves = [] 
+        valid_moves = []
+
+        x, y = pos 
+        possible_moves << [x+2, y-1]
+        possible_moves << [x+1, y-2]
+        possible_moves << [x-1, y+2]
+        possible_moves << [x-2, y+1]
+        possible_moves << [x+1, y+2]
+        possible_moves << [x+2, y+1]
+        possible_moves << [x-1, y-2]
+        possible_moves << [x-2, y-1]
+
+        possible_moves.each do |move|
+            if valid_position(move) == true
+                valid_moves << move
+            end
+        end
         return valid_moves
     end
+
     def valid_position(pos)
         x, y = pos 
         if x.between?(0, 7) && y.between?(0, 7)
@@ -47,4 +60,5 @@ class KnightPathFinder
         end
     return @considered_positions
     end
+
 end
