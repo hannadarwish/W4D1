@@ -1,3 +1,4 @@
+require_relative "KnightPathFinder.rb"
 class PolyTreeNode
 
     attr_reader :root_node, :parent, :children
